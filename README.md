@@ -20,11 +20,11 @@ This project is an automatic intelligent robot system providing argicultural and
 
 Here is a peak of what we do:
 
-**Entire process:**
+## Entire process:
 
 ![ezgif com-video-to-gif](https://user-images.githubusercontent.com/36265245/49698794-a2216880-fc03-11e8-964f-df079c1723ab.gif)
 
-**Special features:**
+## Special features:
 
 | <a>**Compare all the mangos and choose the beautiful one**</a> | <a>**Observe the situation and deal with the problem if mangos are too closed**</a> | 
 | :---: |:---:| 
@@ -32,6 +32,21 @@ Here is a peak of what we do:
 
 # System flowchart
 
+- Environment: 
+
+  Many mangoes float freely in the water.
+
+- Object detection: 
+
+  Real-time pixel information will transmitted from Intel realsense depth camera to Jetson TX2 processor and the 3D object coordinates will be transmitted to the robot arm controller and gripping situation will also be recognized by deep leaning algorithm.
+
+Fruit clamping: SCARA robot arm will receive position information from the processor, with pneumatic gripper and compressor pressure, the fruit clamp in water will be taken out.
+
+Air-drying of air compressor: The arm moves to the air-drying area and stays. The high-pressure air released by the air compressor is rotated with the arm. The water droplets attached to the fruit are blown away and placed in the box.
+
+Air Cylinder Mobile Platform and Laser Marking: Mobile Platform moves the box to the marking area. Through the domestic laser marking machine, two-dimensional QRcode of the production resume is printed on the box. After scanning, it can be linked to the cloud of our stored data.
+
+Cloud monitoring: During the operation of this system, the whole process can be monitored by API. If the carton on the mobile platform is subjected to improper external force, the operation of arm marking and laser marking will be stopped immediately to avoid danger
 # Techniques
 
 ## Real-time object detection by CNN
