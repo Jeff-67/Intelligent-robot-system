@@ -5,7 +5,7 @@
 
 > [Techniques](#techniques)
 
-  - Real-time object detection by CNN
+  - [Real-time object detection by CNN](#real-time-object-detection-by-CNN)
   
   - Deploy model on Jetson TX2 and intel real-sense 3D camera 
   
@@ -60,7 +60,7 @@ Here is a peak of what we do:
 
 # Techniques
 
-## Real-time object detection by CNN
+## Real time object detection by CNN
 
 - Environment setting
 
