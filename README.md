@@ -1,9 +1,9 @@
 # Using-CNN-for-real-time-object-detection-on-Jetson-TX2-with-Intel-realsense-camera
-> Abstract
+> [Abstract](#abstract)
 
-> System flowchart
+> [System flowchart](#system-flowchart)
 
-> Techniques
+> [Techniques](#techniques)
 
   - Real-time object detection by CNN
   
@@ -13,7 +13,7 @@
   
   - Cloud monitoring and cloud-based product resume
   
-> Highlights
+> [Highlights](#highlights)
 
 # Abstract
 This project is an automatic intelligent robot system providing argicultural and industrial solution. Our pupose is to integrate the processes from fruit cleaning to sales, including picking up from the water, drying, packing and marking. We achieve the goal through deep learning computer vision and improve the entire process by cloud monitoring.
@@ -40,13 +40,24 @@ Here is a peak of what we do:
 
   Real-time pixel information will transmitted from Intel realsense depth camera to Jetson TX2 processor and the 3D object coordinates will be transmitted to the robot arm controller and gripping situation will also be recognized by deep leaning algorithm.
 
-Fruit clamping: SCARA robot arm will receive position information from the processor, with pneumatic gripper and compressor pressure, the fruit clamp in water will be taken out.
+- Fruit gripping: 
 
-Air-drying of air compressor: The arm moves to the air-drying area and stays. The high-pressure air released by the air compressor is rotated with the arm. The water droplets attached to the fruit are blown away and placed in the box.
+  SCARA robot arm will receive position information and from the processor and send compressor pressure information to control pneumatic gripper than the fruit in water will be gripped out.
 
-Air Cylinder Mobile Platform and Laser Marking: Mobile Platform moves the box to the marking area. Through the domestic laser marking machine, two-dimensional QRcode of the production resume is printed on the box. After scanning, it can be linked to the cloud of our stored data.
+- Air-drying machine: 
 
-Cloud monitoring: During the operation of this system, the whole process can be monitored by API. If the carton on the mobile platform is subjected to improper external force, the operation of arm marking and laser marking will be stopped immediately to avoid danger
+  The arm will move to the air-drying area and stays. The arm gripped with the fruit will rotates in r axes so that the high-pressure air released by the air compressor could blown water droplets away. After all, the fruit will be placed neatly in the box.
+
+- Air-powered Platform and Laser Marking machine: 
+
+  Air-powered Platform moves the box to the marking area. Through the laser marking machine, two-dimensional QRcode of the production resume is printed on the box. After scanning, it can be linked to the cloud data.
+
+- Cloud monitoring: 
+
+  During the operation of this system, the whole process can be monitored by cloud API. If the box on the air-powered platform is interupted by improper external force, the operation of arm marking and laser marking will be stopped immediately to avoid danger.
+  
+![screen shot 2018-12-10 at 10 57 59 pm](https://user-images.githubusercontent.com/36265245/49740423-1c6aef00-fccf-11e8-822b-717e67e4fbe7.png)
+
 # Techniques
 
 ## Real-time object detection by CNN
