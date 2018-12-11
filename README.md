@@ -146,8 +146,6 @@ Here is a peak of what we do:
   ```
 
   (Note: Press the number on the keyboard you want to label and drag your mouse.For instance, if this one is classes 0, then press 0 and drag it, then it will create a file ``images_name.txt`` automatically which contains ``<object-class>`` ``<x>`` ``<y>`` ``<width>`` ``<height>``), just like the Fig.2 below.
-  
-  ![screen shot 2018-12-11 at 9 07 47 pm](https://user-images.githubusercontent.com/36265245/49802792-e8540480-fd88-11e8-8ffa-d1180afa04e6.png)
    
   | <a>**Bounding boxes with dimension priors and location prediction.**</a> | <a>**Labeling**</a> 
   | :---: |:---:| 
