@@ -152,7 +152,7 @@ Here is a peak of what we do:
   |![screen shot 2018-12-11 at 9 13 47 pm](https://user-images.githubusercontent.com/36265245/49803308-6664db00-fd8a-11e8-9ecb-8413a8942b34.png)   | ![screen shot 2018-12-11 at 9 07 47 pm](https://user-images.githubusercontent.com/36265245/49802792-e8540480-fd88-11e8-8ffa-d1180afa04e6.png)
   | <a>**Fig.1**</a> | <a>**Fig.2**</a> 
 
-- Training Model
+- Training and improving Model
 
   At first, the algorithm we used is Convolutional Neural Network (CNN). This learning method is a special kind of neural network structure, which includes several Convolutional Layers, Subsampling Layers, and Fully Connected Layer. In this training, we use multiple Convolutional Kernel (Convolutional Kernel) to convolute and extract features from a large number of previously collected and processed data, and enhance the mapping relationship between learning pictures and Target values through the hyper paramteter Epoch, BatchSize and the learning rate of back propagation in the training model. In addition, in order to achieve more efficient and immediate learning, the dimension of the image is reduced through the down-sampling layer (also known as pooling Layer), but feature is restored while dimension is reduced, thus it could accelerate the learning process. Finally, in the output full-connection layer, as in the general neural network, the non-linear transformation is done through the activation function after the product. We use the Rectified Linear Units (ReLUs) to make the training of convolutional neural network converge faster. The position information obtained by object detection is transmitted to the robot arm controller, and then the following arm automatic gripping will be carried out.
    
@@ -238,9 +238,7 @@ Here is a peak of what we do:
   ```
   (Note:the trained wieghts wiil be saved in the folder ``backup/``)
   (Note: we could use the command ``$ watch --color -n1 gpustat -cpu`` to monitor the gpu usage while training)
-
-
-- Test Data, improve model 
+ 
 
 ## Deploy model on Jetson TX2 and intel real-sense RGBD camera
 
