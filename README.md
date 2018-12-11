@@ -246,6 +246,141 @@ Here is a peak of what we do:
 
 - mapping to world coordinates(X,Y,Z)
 
+  > Installing Intle realsense SDK:
+  
+  ```shell
+  $ git clone https://github.com/IntelRealSense/librealsense
+  ```
+  After downloaded you can plug your D400 series depth camera through type c connector and start you first application.
+
+  > Get 3D World coordinates:
+
+    Actually, there isn’t a direct examples that shows how to mapping coordinates, but we can get some clue from the examples ``rs-measure`` and ``rs-get_distance``.
+ 
+    First, we can acquired the x,y coordinates from yolo, but how to get the corresponding z coordinates?
+
+    From the few lines of codes in example ``librealsense/examples/C/distance/rs-distance.c`` we can get some hints:
+    
+    It includes some useful library first.
+    ```C
+    #include <librealsense2/rs.hpp>
+    #include "example.hpp"
+    ```
+   
+    The code below is opening the camera then start streaming and capture the frame simultaneously.But if you look closer, you will find out they call a function called rs2_depth_frame_get_distance,this seems like the camera measure the distance between the center of instantaneous frame and the camera. 
+    
+    ```C
+    rs2::config cfg;
+    rs2::pipeline pipe;
+    rs2_config_enable_stream(config, STREAM, STREAM_INDEX, WIDTH, HEIGHT, FORMAT, FPS, &e);
+    rs2::pipeline_profile prf = pipe.start(cfg);
+    rs2::frameset frames = pipe.wait_for_frames();
+    rs2::frame depth_frame = aligned_frames.get_depth_frame();
+    rs2_frame* frame = rs2_extract_frame(frames, i, &e);
+    if (0 == rs2_is_frame_extendable_to(frame, RS2_EXTENSION_DEPTH_FRAME, &e))
+    continue;
+    int width = rs2_get_frame_width(frame, &e);
+    int height = rs2_get_frame_height(frame, &e);
+    float dist_to_center = rs2_depth_frame_get_distance(frame, width / 2, height / 2, &e);
+    ```
+    Since we could modify the function to let we insert the arguments (x,y) to get the z coordinates as well as “distance”.
+
+    ```C
+    float x=atof(argv[1]);
+    float y=atof(argv[2]);
+    ```
+
+    Unfortunately, the x.y coordinates is captured by color frame but the z coordinates is come from depth frames. In other words, the values aren’t really corresponding according to the distance between depth camera and RGB camera.
+
+    In ``librealsense/examples/measure/rs-distance.cpp`` we could peak some solution:
+
+    It includes the useful library first as well.
+    
+    ``#include <librealsense2/rsutil.h>``
+
+    Then we configure camera pipeline for depth + color streaming
+    
+    ```C
+    rs2::pipeline pipe;
+    rs2::config cfg;
+    cfg.enable_stream(RS2_STREAM_DEPTH); 
+    cfg.enable_stream(RS2_STREAM_COLOR, RS2_FORMAT_RGBA8);
+    auto profile = pipe.start(cfg);
+    auto sensor = profile.get_device().first<rs2::depth_sensor>();
+    ```
+    The below is what we need, applying the align processing block to align color frame to depth viewport
+    ```C
+    rs2::align align_to(RS2_STREAM_DEPTH);
+    data = align_to.process(data);
+    auto colorized = color_map(depth);
+    ```
+
+    To convert pixels in the depth image into 3D points we are calling ``rs2_deproject_pixel_to_point`` function (declared in ``rsutil.h``). This function needs depths intrinsics, 2D pixel and distance in meters. Here is how we fetch depth intrinsics and get distance in meters can be acquired using get_distance function of depth_frame class just like the previous one.
+    ```C
+    auto stream = profile.get_stream(RS2_STREAM_DEPTH).as<rs2::video_stream_profile>();
+    auto intrinsics = stream.get_intrinsics(); // Calibration data
+
+    float dist_3d(const rs2_intrinsics& intr, const rs2::depth_frame& frame, pixel u, pixel v)
+    {
+        float upixel[2]; 
+        float upoint[3];
+
+        float vpixel[2]; 
+        float vpoint[3]; 
+         upixel[0] = u.first;
+     upixel[1] = u.second;
+     vpixel[0] = v.first;
+     vpixel[1] = v.second
+    auto udist = frame.get_distance(upixel[0], upixel[1]);
+    auto vdist = frame.get_distance(vpixel[0], vpixel[1]);
+
+     rs2_deproject_pixel_to_point(upoint, &intr, upixel, udist);
+     rs2_deproject_pixel_to_point(vpoint, &intr, vpixel, vdist);
+    ```
+    
+    Now we can combine all the mapping process together :
+    
+    ```C
+    #include <librealsense2/rs.hpp> // Include RealSense Cross Platform API
+    #include <librealsense2/rsutil.h>
+    #include "example.hpp"          // Include short list of convenience functions for rendering
+
+    // This example will require several standard data-structures and algorithms:
+    #define _USE_MATH_DEFINES
+    #include <math.h>
+    #include <queue>
+    #include <unordered_set>
+    #include <map>
+    #include <thread>
+    #include <atomic>
+    #include <mutex>
+    #include <stdlib.h>
+     int main(int argc, char * argv[])
+     {
+        float x=atof(argv[1]);
+        float y=atof(argv[2]);
+        rs2::config cfg;
+        rs2::pipeline pipe;
+        cfg.enable_stream(RS2_STREAM_COLOR, 640, 480, RS2_FORMAT_BGR8, 30);
+        cfg.enable_stream(RS2_STREAM_DEPTH, 640, 480, RS2_FORMAT_Z16, 30);
+        rs2::pipeline_profile prf = pipe.start(cfg);
+        //auto profile = pipe.start(cfg);
+        auto stream = prf.get_stream(RS2_STREAM_DEPTH).as<rs2::video_stream_profile>();
+        struct rs2_intrinsics intrin = stream.get_intrinsics();
+        rs2::frameset frames = pipe.wait_for_frames();
+        rs2::align align(rs2_stream::RS2_STREAM_COLOR);
+        rs2::frameset aligned_frames = align.process(frames);
+        rs2::frame color_frame = frames.get_color_frame();
+        rs2::frame depth_frame = aligned_frames.get_depth_frame();
+        rs2::depth_frame df = depth_frame.as<rs2::depth_frame>();
+        float d_pt[3] = { 0 };
+        float d_px[2] = { x, y }; // where x and y are 2D coordinates for a pixel on depth frame
+        float depth = df.get_distance(x, y);
+        rs2_deproject_pixel_to_point(d_pt, &intrin, d_px, depth);
+        printf("%f %f %f",d_pt[0], d_pt[1],d_pt[2]);
+        return EXIT_SUCCESS;
+     }
+    ```
 ## Robotics 
 
 ## Cloud supervising
