@@ -102,9 +102,13 @@ Here is a peak of what we do:
   ```shell
   $ make
   ```
-- Getting Raw Data
+- Getting Raw Data, Data Augmentation & Data Preprocessing
 
-- Data Preprocessing & Features Extraction
+  Get about 4000 images of various mangoes from IMAGNET and 4000 images from photography. Besides, so as to obtain more feature photo data, data augmentation is carried out to simulate various situations in water by rotating the fruit photos horizontally and vertically. Furthermore, before entering the training of deep learning algorithm, we must pre-process and regularize the huge amount of data, classify all data in the first step, and adjust them to the same pixels and size.
+  
+  | <a>**Getting bid data from IMAGNET**</a> | <a>**Photograpghy**</a> | 
+  | :--------: |:---:| 
+  |![screen shot 2018-12-11 at 8 34 17 pm](https://user-images.githubusercontent.com/36265245/49802064-d83b2580-fd86-11e8-857f-8241ecea5a84.png)| ![1_color](https://user-images.githubusercontent.com/36265245/49801600-9493ec00-fd85-11e8-9e8b-9ac6c33f3c5e.png)| 
 
 - Training Model
 
