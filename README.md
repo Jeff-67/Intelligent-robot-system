@@ -197,6 +197,48 @@ Here is a peak of what we do:
                  activation=None, use_bias=True, name="conv_dec")
     return net
    ```
+   
+   In order to prevernt over-fitting and boost the prediction acciract, I choose Yolov3-tiny as the final model, and it really works incredibly well (Shown in Fig.3).
+   The newer architecture (shown in Fig.4) boasts of residual skip connections, and upsampling. The most salient feature of Yolov3 is that it makes detections at three different scales, which are precisely given by downsampling the dimensions of the input image by 32, 16 and 8 respectively and is obviously better at detecting smaller objects.
+  
+  | <a>**Prediction of good and bad mangoes (with score)**</a> | <a>**Nerual network layers**</a> 
+  | :---: |:---:| 
+  |![screen shot 2018-12-09 at 2 00 21 pm](https://user-images.githubusercontent.com/36265245/49804936-de350480-fd8e-11e8-99f5-9c397e8c4745.png)|  ![screen shot 2018-12-11 at 9 48 17 pm](https://user-images.githubusercontent.com/36265245/49804805-839ba880-fd8e-11e8-9c57-52e120c73909.png)
+  | <a>**Fig.3**</a> | <a>**Fig.4**</a> 
+  
+  Here is a peak of what I do:
+  
+  Copy ``yolov3-tiny_obj.cfg`` and rename it as ``yolov3-tiny-obj.cfg``. Then,began to tune the hyperparameter!!
+  
+  > Hyperparameter tunning:
+
+  First change the numbers of classes to yours in the layer ``[yolo]``, then change the number of filter in the layer ``[convolutional]`` before the layer``[yolo]`` by this equation: 
+  
+  ###filters=(classes + 5)x3
+
+  Then rewrite the context in ``obj.data`` to:
+  
+  ```C
+  classes= #our number of object classes
+  train  = data/train.txt
+  valid  = data/test.txt
+  names = data/obj.names
+  backup = backup/
+  ```
+  > Download pre-trained weights:
+  
+  ```shell
+  $ git clone  https://pjreddie.com/media/files/yolov3-tiny.weights
+  $ ./darknet partial cfg/yolov3-tiny.cfg yolov3-tiny.weights yolov3-tiny.conv.15 15
+  ```
+  > Start Training:
+  
+  ```shell
+  $./detector train data/obj.data yolov3-tiny-obj.cfg yolov3-tiny.conv.15
+  ```
+  (Note:the trained wieghts wiil be saved in the folder ``backup/``)
+  (Note: we could use the command ``$ watch --color -n1 gpustat -cpu`` to monitor the gpu usage while training)
+
 
 - Test Data, improve model 
 
