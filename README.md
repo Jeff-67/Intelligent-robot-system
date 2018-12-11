@@ -69,7 +69,7 @@ Here is a peak of what we do:
   
   ![screen shot 2018-12-11 at 6 27 40 pm](https://user-images.githubusercontent.com/36265245/49794917-ad93a180-fd73-11e8-8377-8f23830a5aa5.png)
 
-  Environment:
+  > Environment:
   
   Opencv 3.4.0
   
