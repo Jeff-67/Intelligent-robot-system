@@ -91,6 +91,13 @@ Here is a peak of what we do:
   (Note: The line in ‘ARCH’ means the compute power of the GPU,mine gpu is 61 )
   
   ```C
+  GPU=1
+  CUDNN=1
+  OPENCV=1
+  OPENMP=0
+  DEBUG=0
+
+  ARCH= -gencode arch=compute_62,code=[sm_62,compute_62]
   ```
   
   > Get a directory listing of the user’s home directory in HDFS
