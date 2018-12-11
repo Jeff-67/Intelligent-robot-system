@@ -99,19 +99,9 @@ Here is a peak of what we do:
 
   ARCH= -gencode arch=compute_62,code=[sm_62,compute_62]
   ```
-  
-  > Get a directory listing of the user’s home directory in HDFS
-
   ```shell
-  $ hdfs dfs ls
+  $ make
   ```
-  > Display the contents of the HDFS file /user/semiconductor/data.csv
-
-  ```shell
-  $ hdfs dfs –cat /user/semiconductor/data.csv
-  ```
-  
-
 - Getting Raw Data
 
 - Data Preprocessing & Features Extraction
