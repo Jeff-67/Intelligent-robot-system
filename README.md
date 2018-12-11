@@ -42,7 +42,7 @@ Here is a peak of what we do:
 
 - Fruit gripping: 
 
-  SCARA robot arm will receive position information and from the processor and send compressor pressure information to control pneumatic gripper than the fruit in water will be gripped out.
+  SCARA robot arm will receive position information from the processor and send compressor pressure information to control pneumatic gripper and than the fruit in water will be gripped out.
 
 - Air-drying machine: 
 
@@ -104,7 +104,7 @@ Here is a peak of what we do:
   ```
 - Getting Raw Data, Data Augmentation & Data Preprocessing
 
-  Get about 4000 images of various mangoes from IMAGNET and 4000 images from photography. Besides, so as to obtain more feature photo data, data augmentation is carried out to simulate various situations in water by rotating the fruit photos horizontally and vertically. Furthermore, before entering the training of deep learning algorithm, we must pre-process and regularize the huge amount of data, classify all data in the first step, and adjust them to the same pixels and size.
+  Get about 4000 images of various mangoes from IMAGENET and 4000 images from photography. Besides, so as to obtain more feature photo data, data augmentation is carried out to simulate various situations in water by rotating the fruit photos horizontally and vertically. Furthermore, before entering the training of deep learning algorithm, we must pre-process and regularize the huge amount of data, classify all data in the first step, and adjust them to the same pixels and size.
   
   | <a>**Getting bid data from IMAGNET**</a> | <a>**Photograpghy**</a> | 
   | :--------: |:---:| 
@@ -198,7 +198,7 @@ Here is a peak of what we do:
     return net
    ```
    
-   In order to prevernt over-fitting and boost the prediction acciract, I choose Yolov3-tiny as the final model, and it really works incredibly well (Shown in Fig.3).
+   In order to prevent over-fitting and boost the prediction accuracy, I choose Yolov3-tiny as the final model, and it really works incredibly well (Shown in Fig.3).
    The newer architecture (shown in Fig.4) boasts of residual skip connections, and upsampling. The most salient feature of Yolov3 is that it makes detections at three different scales, which are precisely given by downsampling the dimensions of the input image by 32, 16 and 8 respectively and is obviously better at detecting smaller objects.
   
   | <a>**Prediction of good and bad mangoes (with score)**</a> | <a>**Nerual network layers**</a> 
@@ -381,7 +381,7 @@ Here is a peak of what we do:
         return EXIT_SUCCESS;
      }
     ```
-## Robotics 
+## IoT Communication 
 
 ## Cloud supervising
      
