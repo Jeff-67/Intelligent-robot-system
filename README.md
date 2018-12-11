@@ -152,8 +152,51 @@ Here is a peak of what we do:
   |![screen shot 2018-12-11 at 9 13 47 pm](https://user-images.githubusercontent.com/36265245/49803308-6664db00-fd8a-11e8-9ecb-8413a8942b34.png)   | ![screen shot 2018-12-11 at 9 07 47 pm](https://user-images.githubusercontent.com/36265245/49802792-e8540480-fd88-11e8-8ffa-d1180afa04e6.png)
   | <a>**Fig.1**</a> | <a>**Fig.2**</a> 
 
-
 - Training Model
+
+  At first, the algorithm we used is Convolutional Neural Network (CNN). This learning method is a special kind of neural network structure, which includes several Convolutional Layers, Subsampling Layers, and Fully Connected Layer. In this training, we use multiple Convolutional Kernel (Convolutional Kernel) to convolute and extract features from a large number of previously collected and processed data, and enhance the mapping relationship between learning pictures and Target values through the hyper paramteter Epoch, BatchSize and the learning rate of back propagation in the training model. In addition, in order to achieve more efficient and immediate learning, the dimension of the image is reduced through the down-sampling layer (also known as pooling Layer), but feature is restored while dimension is reduced, thus it could accelerate the learning process. Finally, in the output full-connection layer, as in the general neural network, the non-linear transformation is done through the activation function after the product. We use the Rectified Linear Units (ReLUs) to make the training of convolutional neural network converge faster. The position information obtained by object detection is transmitted to the robot arm controller, and then the following arm automatic gripping will be carried out.
+   
+   This is our first model, but it wasn't precise and fast at all.
+   
+   ```python
+   def model(images, n_last_channels=425):
+    net = conv2d(images, 32, 3, 1, name="conv1")
+    net = maxpool(net, name="pool1")
+    net = conv2d(net, 64, 3, 1, name="conv2")
+    net = maxpool(net, name="pool2")
+    net = conv2d(net, 128, 3, 1, name="conv3_1")
+    net = conv2d(net, 64, 1, name="conv3_2")
+    net = conv2d(net, 128, 3, 1, name="conv3_3")
+    net = maxpool(net, name="pool3")
+    net = conv2d(net, 256, 3, 1, name="conv4_1")
+    net = conv2d(net, 128, 1, name="conv4_2")
+    net = conv2d(net, 256, 3, 1, name="conv4_3")
+    net = maxpool(net, name="pool4")
+    net = conv2d(net, 512, 3, 1, name="conv5_1")
+    net = conv2d(net, 256, 1, name="conv5_2")
+    net = conv2d(net, 512, 3, 1, name="conv5_3")
+    net = conv2d(net, 256, 1, name="conv5_4")
+    net = conv2d(net, 512, 3, 1, name="conv5_5")
+    shortcut = net
+    net = maxpool(net, name="pool5")
+    net = conv2d(net, 1024, 3, 1, name="conv6_1")
+    net = conv2d(net, 512, 1, name="conv6_2")
+    net = conv2d(net, 1024, 3, 1, name="conv6_3")
+    net = conv2d(net, 512, 1, name="conv6_4")
+    net = conv2d(net, 1024, 3, 1, name="conv6_5")
+    # ---------
+    net = conv2d(net, 1024, 3, 1, name="conv7_1")
+    net = conv2d(net, 1024, 3, 1, name="conv7_2")
+    # shortcut
+    shortcut = conv2d(shortcut, 64, 1, name="conv_shortcut")
+    shortcut = reorg(shortcut, 2)
+    net = tf.concat([shortcut, net], axis=-1)
+    net = conv2d(net, 1024, 3, 1, name="conv8")
+    # detection layer
+    net = conv2d(net, n_last_channels, 1, batch_normalize=0,
+                 activation=None, use_bias=True, name="conv_dec")
+    return net
+   ```
 
 - Test Data, improve model 
 
