@@ -214,7 +214,7 @@ Here is a peak of what we do:
 
   First change the numbers of classes to yours in the layer ``[yolo]``, then change the number of filter in the layer ``[convolutional]`` before the layer``[yolo]`` by this equation: 
   
-  ###filters=(classes + 5)x3
+  filters=(classes + 5)x3
 
   Then rewrite the context in ``obj.data`` to:
   
