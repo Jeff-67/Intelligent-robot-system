@@ -62,13 +62,47 @@ Here is a peak of what we do:
 
 ## Real time object detection by CNN
 
-- Environment setting
+- Environment setting:
 
   There are many algorithms and frameworks using for object detection, in this project I will build our own object detection system on Yolov3-tiny. Reasons are followed: Simply because it is stronger, better and faster.
   YOLOv3 feature extractor is a residual model, because it contains 53 convolution layers, so it is called Darknet-53. From the network structure, compared with Darknet-19 network, it uses residual units, so it can be built deeper. Another point is to use FPN architecture (Feature Pyramid Networks for Object Detection) to achieve multi-scale detection. YOLOv3 uses three scale feature maps (when the input is 416 times13), (26 times26), (52\ times52). The picture below shows that the Yolov3 out-compete others in speed. 
   
   ![screen shot 2018-12-11 at 6 27 40 pm](https://user-images.githubusercontent.com/36265245/49794917-ad93a180-fd73-11e8-8377-8f23830a5aa5.png)
 
+  Environment:
+  
+  Opencv 3.4.0
+  
+  Python 2.7
+  
+  Cuda 9.0
+  
+  cudnn 7
+  
+  GPU:Nvidia GTX 1080TI 
+  
+  > Installing Yolov3
+  ```shell
+  $ cd
+  $ git clone https://github.com/pjreddie/darknet darknet
+  $ cd darknet
+  $ vim Makefile
+  ```
+  (Note: The line in ‘ARCH’ means the compute power of the GPU,mine gpu is 61 )
+  
+  ```C
+  ```
+  
+  > Get a directory listing of the user’s home directory in HDFS
+
+  ```shell
+  $ hdfs dfs ls
+  ```
+  > Display the contents of the HDFS file /user/semiconductor/data.csv
+
+  ```shell
+  $ hdfs dfs –cat /user/semiconductor/data.csv
+  ```
   
 
 - Getting Raw Data
