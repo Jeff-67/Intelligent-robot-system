@@ -108,7 +108,52 @@ Here is a peak of what we do:
   
   | <a>**Getting bid data from IMAGNET**</a> | <a>**Photograpghy**</a> | 
   | :--------: |:---:| 
-  |![screen shot 2018-12-11 at 8 34 17 pm](https://user-images.githubusercontent.com/36265245/49802064-d83b2580-fd86-11e8-857f-8241ecea5a84.png)| ![1_color](https://user-images.githubusercontent.com/36265245/49801600-9493ec00-fd85-11e8-9e8b-9ac6c33f3c5e.png)| 
+  |![screen shot 2018-12-11 at 8 34 17 pm](https://user-images.githubusercontent.com/36265245/49802064-d83b2580-fd86-11e8-857f-8241ecea5a84.png)| ![1_color](https://user-images.githubusercontent.com/36265245/49801600-9493ec00-fd85-11e8-9e8b-9ac6c33f3c5e.png)|
+  
+- Labeling
+  
+  A great labeling could have a profound effect on predicting the width and height of the box as offsets from cluster centroids. Fig.1 shows how Yolov3 predict the center coordinates of the box relative to the location of filter application using a sigmoid function.
+  In order to operating a great label process, I use the efficient labeling tool yolo_mark to label all the pictures/data in 2 classes. Here is what I am doing:
+  
+  > Installing Yolo_mark
+  
+  ```shell
+  $ git clone https://github.com/AlexeyAB/Yolo_mark
+  $ cmake  .
+  $ make
+  $ sudo ./linux_mark
+  ```
+  (If you encounter some bugs like ‘sudo ./ command no found’,try this:
+  
+   ```shell
+  $ chmod +x linux_mark.sh
+  $ ./linux_mark.sh)
+  ```
+  If this application can compile properly, then it’s time to label our own data
+
+  1.Clean all the images in ``x64/Release/data/img``
+  
+  2.Move all the training images data to ``x64/Release/data/img``
+  
+  (Note: The filename should be ``.jpeg``, not ``.JPEG``,we could change all the filename by this command ``$ rename -v s/jpeg/JPEG/ *jpeg``)
+  
+  3.Change the number of classes you want to train and label in ``obj.data``
+  
+  4.Change the names of your labels and classes in each line of ``obj.names``
+  
+  ```shell
+  $ ./linux_mark
+  ```
+
+  (Note: Press the number on the keyboard you want to label and drag your mouse.For instance, if this one is classes 0, then press 0 and drag it, then it will create a file ``images_name.txt`` automatically which contains ``<object-class>`` ``<x>`` ``<y>`` ``<width>`` ``<height>``), just like the Fig.2 below.
+  
+  ![screen shot 2018-12-11 at 9 07 47 pm](https://user-images.githubusercontent.com/36265245/49802792-e8540480-fd88-11e8-8ffa-d1180afa04e6.png)
+   
+  | <a>**Bounding boxes with dimension priors and location prediction.**</a> | <a>**Labeling**</a> 
+  | :---: |:---:| 
+  |![screen shot 2018-12-11 at 9 13 47 pm](https://user-images.githubusercontent.com/36265245/49803308-6664db00-fd8a-11e8-9ecb-8413a8942b34.png)   | ![screen shot 2018-12-11 at 9 07 47 pm](https://user-images.githubusercontent.com/36265245/49802792-e8540480-fd88-11e8-8ffa-d1180afa04e6.png)
+  | <a>**Fig.1**</a> | <a>**Fig.2**</a> 
+
 
 - Training Model
 
