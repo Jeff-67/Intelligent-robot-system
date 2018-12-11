@@ -381,8 +381,16 @@ Here is a peak of what we do:
         return EXIT_SUCCESS;
      }
     ```
-## IoT Communication 
-
 ## Cloud supervising
+
+- Product Resume
+
+  We compile a web page that can upload fruit information by Weebly, producing a QR-code marked by lazer machine so that we can connect out cloud-based product resume via smart phone with the advantage of the Internet.
+
+- Cloud monitoring
+
+  We capture the real-time system operating data and send it immediately by Node-Red to the Intelligent Manufacturing platform(developed by Syntec) so that we are able to monitor the entire process through the API which we developed in Javascript.
+
+## IoT Communication 
      
 # Highlights
