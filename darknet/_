@@ -1,0 +1,33 @@
+
+import serial
+import numpy as np
+ser=serial.Serial("/dev/ttyS0" , 115200, timeout= 0.5 )
+#ser2=serial.Serial("/dev/ttyS0" , 9600, timeout= 0.5 )
+#ser = serial.Serial('/dev/ttyS0', 9600, serial.EIGHTBITS, serial.PARITY_NONE, serial.STOPBITS_ONE, timeout= 0.5)
+
+#ser.open()
+
+#print(ser.name)
+while(1):
+	a = ser.readline()
+#if a == True:
+	print(a)
+#c = np.array([59,232,655])
+#x = c[1]
+#y = c[2]
+#values = chr(x)
+
+#value = 'x'
+#values = chr(y)
+#ser.write(value)
+
+
+#values = bytearray([4, 9, 62, 144, 56, 30, 147, 3, 210, 89, 111, 78, 184, 151, 17, 129])
+	#ser.write(values)
+#ser.write(value)
+ser.close()
+
+
+
+
+
