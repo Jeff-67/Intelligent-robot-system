@@ -213,6 +213,8 @@ Here is a peak of what we do:
   
   Here is a peak of what I do:
   
+  <a href="https://github.com/JEFF0824/Intelligent-robot-system/tree/master/examples" target="_blank">Here</a> is the code!!
+  
   Copy ``yolov3-tiny_obj.cfg`` and rename it as ``yolov3-tiny-obj.cfg``. Then,began to tune the hyperparameter!!
   
   > Hyperparameter tunning:
@@ -283,6 +285,8 @@ Here is a peak of what we do:
 
   > Get 3D World coordinates:
 
+    <a href="https://github.com/JEFF0824/Intelligent-robot-system/tree/master/camera" target="_blank">Here</a> is the code!!
+    
     Actually, there isn’t a direct examples that shows how to mapping coordinates, but we can get some clue from the examples ``rs-measure`` and ``rs-get_distance``.
  
     First, we can acquired the x,y coordinates from yolo, but how to get the corresponding z coordinates?
@@ -422,7 +426,11 @@ Here is a peak of what we do:
     ```
     
     Although the OpenCV function embedded in Yolo could obtain the coordinates, it could not transmit the information and map it to world coordinates, thus I use ``Python`` to build a conector to bridge Jetson TX2 and Intel RGBD camera as well as mapping the coordinates.
-    
+  ```python
+  import os,subprocess,commands
+  ```
+  <a href="https://github.com/JEFF0824/Intelligent-robot-system/tree/master/code" target="_blank">Here</a> is the code!!
+  
 ## Cloud supervising
 
 - Product Resume
@@ -433,9 +441,7 @@ Here is a peak of what we do:
 
   We capture the real-time system operating data and send it immediately by Node-Red to the Intelligent Manufacturing platform(developed by Syntec) so that we are able to monitor the entire process through the API which we developed in Javascript.
   
-  ```python
-  import os,subprocess,commands
-  ```
+
 
 ## IoT Communication 
      
