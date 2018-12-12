@@ -7,11 +7,11 @@
 
   - [Real-time object detection by CNN](#real-time-object-detection-by-CNN)
   
-  - Deploy model on Jetson TX2 and intel real-sense 3D camera 
+  - [Deploy model on Jetson TX2 and intel real-sense 3D camera](#deploy-model-on-Jetson-TX2-and-intel-real-sense-RGBD-camera) 
   
-  - Robotics
+  - [IoT Communication](#ioT-Communication)
   
-  - Cloud monitoring and cloud-based product resume
+  - [Cloud monitoring and cloud-based product resume](#cloud-monitoring-and-cloud-based-product-resume)
   
 > [Highlights](#highlights)
 
@@ -431,7 +431,7 @@ Here is a peak of what we do:
   ```
   <a href="https://github.com/JEFF0824/Intelligent-robot-system/tree/master/code" target="_blank">Here</a> is the code!!
   
-## Cloud supervising
+## Cloud monitoring and cloud-based product resume
 
 - Product Resume
 
