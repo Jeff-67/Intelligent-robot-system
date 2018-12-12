@@ -67,6 +67,8 @@ Here is a peak of what we do:
 
 - Environment setting:
 
+  Because the target object(mangoes) of the system is in water. Besides plane coordinates, the target also has depth coordinates. Therefore, RGB-D lens is selected to obtain three-dimensional coordinates, and we need to develop powerful robot/computer vision model do that the detection ability will not be affected by the lack of environmental light source and could recongnize the object super feast.
+
   There are many algorithms and frameworks using for object detection, in this project I will build our own object detection system on Yolov3-tiny. Reasons are followed: Simply because it is stronger, better and faster.
   YOLOv3 feature extractor is a residual model, because it contains 53 convolution layers, so it is called Darknet-53. From the network structure, compared with Darknet-19 network, it uses residual units, so it can be built deeper. Another point is to use FPN architecture (Feature Pyramid Networks for Object Detection) to achieve multi-scale detection. YOLOv3 uses three scale feature maps (when the input is 416 times13), (26 times26), (52\ times52). The picture below shows that the Yolov3 out-compete others in speed. 
   
@@ -246,6 +248,29 @@ Here is a peak of what we do:
 ## Deploy model on Jetson TX2 and intel real-sense RGBD camera
 
 - Running on jetson TX2
+  
+  ```shell
+  $ ./darknet detector test data/obj.data yolo-obj.cfg yolo-obj_(#iteration numbers).weights
+  ```
+  (Note: This one is testing your model by inputing images)
+  
+  ```shell
+  $ ./darknet detector demo data/obj.data yolov3-tiny-obj.cfg backup/yolov3-tiny-obj_(#iteration numbers).weights -c 1
+  ```
+  (Note: This one is doing object detection in real time by the webcam,and the command “-c 1” depends on your input device port, we can check it by entering the command: ``$ v4l2-ctl --list-devices`` )
+  
+  Getting the coordinate, we need to modify the file image.c in darlnet/src
+  
+  ```shell
+  $ vim image.c
+  ```
+  Go to line 292 and add this below:
+  
+  ```C
+  Print bounding box values printf("Bounding Box: Left=%d, Top=%d, Right=%d, Bottom=%d\n", left, top, right, bot); 
+  draw_box_width(im, left, top, right, bot, width, red, green, blue);
+  ```
+
 
 - mapping to world coordinates(X,Y,Z)
 
@@ -269,7 +294,18 @@ Here is a peak of what we do:
     #include <librealsense2/rs.hpp>
     #include "example.hpp"
     ```
+   Finally, we can start Realtime detection!!
    
+   ```shell
+   $ sudo nvpmodel -m 0
+   $ sudo ./jetson_clocks.sh
+   ```
+  (Note:this step could maximize the jetson efficacy)
+  
+  ```shell
+  ＄./darknet detector demo data/obj.data yolov3-tiny-obj.cfg backup/yolov3-tiny-obj_(#iteration numbers).weights -c 1
+  ```
+
     The code below is opening the camera then start streaming and capture the frame simultaneously.But if you look closer, you will find out they call a function called rs2_depth_frame_get_distance,this seems like the camera measure the distance between the center of instantaneous frame and the camera. 
     
     ```C
