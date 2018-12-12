@@ -420,6 +420,9 @@ Here is a peak of what we do:
         return EXIT_SUCCESS;
      }
     ```
+    
+    Although the OpenCV function embedded in Yolo could obtain the coordinates, it could not transmit the information and map it to world coordinates, thus I use ``Python`` to build a conector to bridge Jetson TX2 and Intel RGBD camera as well as mapping the coordinates.
+    
 ## Cloud supervising
 
 - Product Resume
@@ -429,6 +432,10 @@ Here is a peak of what we do:
 - Cloud monitoring
 
   We capture the real-time system operating data and send it immediately by Node-Red to the Intelligent Manufacturing platform(developed by Syntec) so that we are able to monitor the entire process through the API which we developed in Javascript.
+  
+  ```python
+  import os,subprocess,commands
+  ```
 
 ## IoT Communication 
      
