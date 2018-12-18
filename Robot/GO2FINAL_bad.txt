@@ -1,0 +1,92 @@
+%@MACRO
+
+// ---initialize---
+@101024:=0.0;
+@20:=0.0;
+
+
+FOR #25:=101310.0 TO 101490.0 BY 1.0 DO
+	@[#25]:=0.;
+END_FOR;
+
+// ---move to wait zone---
+MOVL Z195. FL50;
+MOVJ C1=-15. C2=-40. FJ20; 
+
+//second time,bad mango
+N201;
+N205;
+@100050=8;  //50.3 GO2
+G04 X1.0;
+WAIT();
+
+@100050=128; //50.7 on on rs232
+G04 X1.0;
+WAIT();
+	
+G04 X3.0;
+	
+N200;
+IF @101330<1.0 THEN   //check data
+	GOTO 205;
+END_IF;
+
+@101420:=@101331*100000+@101332*10000+@101333*1000+@101334*100+@101335*10; //X
+WAIT();
+@101421:=@101337*100000+@101338*10000+@101339*1000+@101340*100+@101341*10; //Y
+WAIT();
+@101422:=@101343*100000+@101344*10000+@101345*1000+@101346*100+@101347*10; //Z
+WAIT();
+	
+IF @101330=2 THEN
+	@101423:=0-@101420;  //-X   101423
+ELSE 
+	@101423:=@101420;   //X
+END_IF;
+WAIT();
+
+IF @101336=2 THEN
+	@101424:=0-@101421;    //-Y   101424
+ELSE 
+	@101424:=@101421;   //Y
+END_IF;
+WAIT();
+
+IF @101342=2 THEN
+	@101425:=0-@101422;   //-Z   101425
+ELSE 
+	@101425:=@101422;   //Z
+END_IF;
+WAIT();
+
+
+G04 X1.0;
+
+MOVL X@101423 Y@101424 FL80;  //move to object
+MOVL Z@101425 FL50;    //gripper down
+WAIT();
+SETDO(327,1);    //inflate gripper,on 
+G04 X2.0;
+MOVL Z195. FL80;    //gripper up
+	
+MOVJ C1=-55. C2=-20. FJ20;   //air drying zone
+WAIT();
+	
+SETDO(326,1);      //air drying on
+MOVJ C4=360. FJ10;
+MOVJ C4=0. FJ10;
+
+SETDO(326,0);      //air drying off
+
+MOVJ C1=-25. C2=70. FJ20; //second location, bad box
+MOVL Z84.5 FL50;     //gripper down
+WAIT();
+SETDO(327,0);    //deflate gripper
+G04 X1.0;
+MOVL Z195. FL50;     //gripper up
+WAIT();
+
+// ---move to wait zone---
+MOVJ C1=-15. C2=-40. FJ25; 
+
+M99;
