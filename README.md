@@ -444,5 +444,24 @@ Here is a peak of what we do:
 
 
 ## IoT Communication 
+
+<a href="https://github.com/JEFF0824/Intelligent-robot-system/tree/master/Robot" target="_blank">Here</a> is the code!!
+
+-	with intelligent vision detection subsystem
+
+After Jetson computes the object coordinate, it sends the coordinate in ASCII to robot arm controller. However, the signal between two systems are different. We need an additional chip – MAX485, to convert the TTL-level signals in jetson to RS-485 signals for robot arm. It is notable that MAX485 needs electricity for operation. In addition, sending and receiving data need extra electricity for different pin. Though, GPIO pins on Jetson are suitable to deal with our task.
+   
+-	with air compressor and solenoid valve subsystem
+
+There are three solenoid valves in our system: control inflating or deflating gripper, turn on or off the air-drying and moving forward or backward the air-powered platform. We transform the wires into suitable plug and place them on the correspond I/O port.
+
+-	with laser marking machine subsystem
+
+Robot arm controller and laser marking machine controller are from Syntec, a technology company. The company provide a convenient connection way for their product – NetPLC. Connect the controllers to a hub and set the IP addresses belong to same network. Then, we can check the specific R value for connection status.
+
+-	with vibration sensor subsystem
+
+Because the vibration sensor can only connect to computer, we need an Arduino chip to connect computer and robot arm controller. When the sensor detect improper external force, the operation of robot arm and laser marking machine will be stopped immediately to avoid danger.
+
      
 # Highlights
